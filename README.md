@@ -1,5 +1,7 @@
 ## TSAD feature extraction
 
+![PythonVersion](https://img.shields.io/badge/python-3.6-blue)
+
 #### tsad_flask代码框架：
 
 * requirements.txt 需要安装的库
