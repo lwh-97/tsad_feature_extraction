@@ -2,7 +2,9 @@
 
 ![PythonVersion](https://img.shields.io/badge/python-3.6-blue)
 
-#### tsad_flask代码框架：
+#### tsad_feature_extraction代码框架：
+
+参考论文[opprentice: Towards Practical and Automatic Anomaly Detection Through Machine Learning](https://conferences2.sigcomm.org/imc/2015/papers/p211.pdf)
 
 * requirements.txt 需要安装的库
   
@@ -19,5 +21,3 @@
 * main/tsad_main.py 运行启动入口，可先运行一下确保环境搭建成功，没有其他bug
 
 * Base.py 是主要的类，其中的_get_feature函数便是在提取特征
-
-
