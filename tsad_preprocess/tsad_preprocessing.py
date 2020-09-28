@@ -28,9 +28,9 @@ def pre_processing(data_path, deal_missing=True, scaled=False, scaled_kind=None)
         deal_missing_data.deal_missing_data()
 
         # 获取缺失值处理后的训练数据
-        ts_data_array = deal_missing_data.ts_data_array
-        ts_timestamp_array = deal_missing_data.ts_timestamp_array
-        ts_label_array = deal_missing_data.ts_label_array
+        ts_data_array = deal_missing_data.full_data_array
+        ts_timestamp_array = deal_missing_data.full_timestamp_array
+        ts_label_array = deal_missing_data.full_label_array
 
     # 对训练数据的time series进行min-max缩放
     if scaled is True:
