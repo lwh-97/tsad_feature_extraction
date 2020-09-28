@@ -11,6 +11,7 @@ import configparser
 import datetime
 import os
 import numpy as np
+import pandas as pd
 
 from sklearn.metrics import precision_recall_curve
 
@@ -87,6 +88,8 @@ class Base:
         """
         period_detect = InterpACF()
         period = period_detect.detect(self.ts_data_array, self.ts_timestamp_array)
+        if period % 1440 == 0:
+            period = 1440
         print("周期为：" + str(period))
         return period + 100, period
 
@@ -231,6 +234,18 @@ class Base:
 
         self.columns_name = columns_name
         print("提取的特征：" + str(self.columns_name))
+
+    def save_features(self, data_path=None, save_path=None):
+        if data_path is not None:
+            self.data_path = data_path
+        self.pre_processing()
+        self._get_feature()
+        ts_label_dataframe = pd.DataFrame({"class": self.ts_feature_data_label})
+        ts_data_dataframe = pd.DataFrame(self.ts_feature_data, columns=self.columns_name)
+        ts_data_label_dataframe = pd.concat([ts_data_dataframe, ts_label_dataframe], axis=1)
+        if save_path is None:
+            file_name = data_path.split("/")[-1]
+            ts_data_label_dataframe.to_csv(self.result_dir + "/" + file_name, index=False)
 
     def _fit_init(self):
         # 开始训练模型
