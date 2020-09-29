@@ -7,10 +7,12 @@
 # @Modify Time      @Author    @Version    @Description
 # ------------      -------    --------    -----------
 # 9/28/20 4:27 PM   hgh      1.0         None
+import sys
 from Base import Base
 
 if __name__ == '__main__':
+    # 进行数据特征的保存
+    data_path = sys.argv[1]
+    save_path = "./result"
     base = Base()
-    # 进行数据的保存
-    data_path = "../data/1th_ts_train.csv"
-    base.save_features(data_path=data_path)
+    base.save_features(data_path=data_path, save_path=save_path)

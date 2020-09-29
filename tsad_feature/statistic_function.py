@@ -12,6 +12,7 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
 
 
 def get_feature_logs(time_series):
+    time_series[time_series < 0] = 0
     return np.log(time_series + 1e-2)
 
 

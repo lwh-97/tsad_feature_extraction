@@ -141,7 +141,7 @@ class Base:
 
             diff_plain = np.abs(self.ts_data_array[i] - self.ts_data_array[i - 1])
             columns_name.append("abs_diff_plain")
-            diff_plain_percent = diff_plain / (self.ts_data_array[i - 1] + 1e-10)
+            diff_plain_percent = diff_plain / (self.ts_data_array[i - 1] + 1e-2)
             columns_name.append("diff_plain_percentage")
             datum.append(diff_plain_percent)
             datum.append(diff_plain)
@@ -149,7 +149,7 @@ class Base:
             diff_day = np.abs(self.ts_data_array[i] - self.ts_data_array[i - period])
             columns_name.append("abs_diff_day")
             datum.append(diff_day)
-            diff_day_percent = diff_day / (self.ts_data_array[i - period] + 1e-10)
+            diff_day_percent = diff_day / (self.ts_data_array[i - period] + 1e-2)
             columns_name.append("diff_day_percentage")
             datum.append(diff_day_percent)
 
@@ -235,7 +235,7 @@ class Base:
         self.columns_name = columns_name
         print("提取的特征：" + str(self.columns_name))
 
-    def save_features(self, data_path=None, save_path=None):
+    def save_features(self, save_path, data_path=None):
         if data_path is not None:
             self.data_path = data_path
         self.pre_processing()
@@ -243,9 +243,11 @@ class Base:
         ts_label_dataframe = pd.DataFrame({"class": self.ts_feature_data_label})
         ts_data_dataframe = pd.DataFrame(self.ts_feature_data, columns=self.columns_name)
         ts_data_label_dataframe = pd.concat([ts_data_dataframe, ts_label_dataframe], axis=1)
-        if save_path is None:
+        # class 必须是int类型，方便后续计算相关指标
+        ts_data_label_dataframe["class"] = ts_data_label_dataframe["class"].astype(int)
+        if save_path is not None:
             file_name = data_path.split("/")[-1]
-            ts_data_label_dataframe.to_csv(self.result_dir + "/" + file_name, index=False)
+            ts_data_label_dataframe.to_csv(save_path + "/" + file_name, index=False)
 
     def _fit_init(self):
         # 开始训练模型

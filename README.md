@@ -21,3 +21,5 @@
 * main/tsad_main.py 运行启动入口，可先运行一下确保环境搭建成功，没有其他bug
 
 * Base.py 是主要的类，其中的_get_feature函数便是在提取特征
+
+* tsad_features.py 提供保存提取时序特征的功能，方法后续处理，目前要求时序数据的格式为两列，分别为 timestamp和value
