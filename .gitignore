@@ -169,4 +169,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.propertiesmv
 
+# result
 result/
+result_scaled/

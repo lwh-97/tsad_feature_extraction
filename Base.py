@@ -242,6 +242,10 @@ class Base:
         self._get_feature()
         ts_label_dataframe = pd.DataFrame({"class": self.ts_feature_data_label})
         ts_data_dataframe = pd.DataFrame(self.ts_feature_data, columns=self.columns_name)
+        from sklearn.preprocessing import StandardScaler
+        stand = StandardScaler()
+        ts_data_dataframe = stand.fit_transform(ts_data_dataframe)
+        ts_data_dataframe = pd.DataFrame(ts_data_dataframe)
         ts_data_label_dataframe = pd.concat([ts_data_dataframe, ts_label_dataframe], axis=1)
         # class 必须是int类型，方便后续计算相关指标
         ts_data_label_dataframe["class"] = ts_data_label_dataframe["class"].astype(int)
