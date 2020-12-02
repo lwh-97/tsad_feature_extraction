@@ -15,6 +15,12 @@ from utils import get_interval
 
 class DealMissingData:
     def __init__(self, ts_data_array, ts_timestamp_array, ts_label_array=None):
+        """
+
+        :param ts_data_array: 待检测时间序列
+        :param ts_timestamp_array:  时间戳
+        :param ts_label_array:  数据标签
+        """
         self.ts_data_array = ts_data_array
         self.ts_timestamp_array = ts_timestamp_array
         self.ts_label_array = ts_label_array
@@ -25,6 +31,10 @@ class DealMissingData:
         self.full_label_array = None
 
     def _get_interval(self):
+        """
+        获取数据采样间隔
+        @return:
+        """
         self.ts_interval = get_interval(self.ts_timestamp_array)
         self.ts_num = np.ceil((self.ts_timestamp_array[-1] - self.ts_timestamp_array[0]) / self.ts_interval) + 1
         print('''the time series in file : 所给数据时间区间内应有数据点个数 = %d, 
@@ -35,6 +45,11 @@ class DealMissingData:
                  int(self.ts_num)-len(self.ts_timestamp_array), self.ts_interval))
 
     def deal_missing_data(self, interpolation_method='linear'):
+        """
+        处理缺失数据
+        :param interpolation_method: 插值方法
+        :return: 插值后的数据
+        """
         self._get_interval()
         ts_index = np.arange(self.ts_timestamp_array[0],
                              self.ts_timestamp_array[-1] + self.ts_interval,

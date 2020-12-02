@@ -13,6 +13,14 @@ from tsad_preprocess.ts_scale import get_scaled_time_series
 
 
 def pre_processing(data_path, deal_missing=True, scaled=False, scaled_kind=None):
+    """
+    数据预处理
+    :param data_path: 文件路径
+    :param deal_missing: 是否处理缺失值
+    :param scaled:  是否进行放缩
+    :param scaled_kind:
+    :return: 待检测数据、数据时间戳、数据标签、间隔
+    """
     # 从文件中获取训练数据
     get_data = GetData(data_path)
     get_data.get_data_from_file()

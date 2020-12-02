@@ -10,6 +10,12 @@
 
 
 def get_scaled_time_series(ts_data_array, scale_function=None):
+    """
+    获取放缩后的时序
+    :param ts_data_array: 待检测时间序列
+    :param scale_function:
+    :return:
+    """
     if scale_function is not None:
         print("making" + str(scale_function))
         ts_data_array = scale_function(ts_data_array)
