@@ -43,26 +43,53 @@ class Base:
         self.start_time = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\n')
 
     def get_ts_data_array(self):
+        """
+        获取时间序列数据
+        :return:
+        """
         return self.ts_data_array.copy()
 
     def set_ts_data_array(self, ts_data_array):
+        """
+        设置时间序列数据
+        :param ts_data_array:
+        :return:
+        """
         ts_data_array = is_array(ts_data_array)
         self.ts_data_array = ts_data_array.copy()
 
     def get_ts_timestamp_array(self):
+        """
+        获取时间序列时间戳
+        :return:
+        """
         return self.ts_timestamp_array.copy()
 
     def set_ts_timestamp_array(self, ts_timestamp_array):
+        """
+        设置时间序列时间戳
+        :param ts_timestamp_array:
+        :return:
+        """
         ts_timestamp_array = is_array(ts_timestamp_array)
         self.ts_timestamp_array = ts_timestamp_array.copy()
 
     def get_ts_label_array(self):
+        """
+        获取时间序列标签
+        :return:
+        """
         if self.ts_label_array is not None:
             return self.ts_label_array.copy()
         else:
             return None
 
     def set_ts_label_array(self, ts_label_array):
+        """
+        设置时间序列的标签
+        :param ts_label_array:
+        @return:
+        """
         if ts_label_array is None:
             self.ts_label_array = None
         else:
@@ -70,6 +97,10 @@ class Base:
             self.ts_label_array = ts_label_array.copy()
 
     def pre_processing(self):
+        """
+        数据预处理
+        :return:
+        """
         # 获取数据
         print('Parsing Data')
         scaled = eval(self.conf.get("pre_processing", "scaled"))
@@ -91,6 +122,10 @@ class Base:
         return period + 100, period
 
     def _get_feature(self):
+        """
+        提取数据特征
+        :return:
+        """
         self.ts_feature_data = []
         self.ts_feature_data_label = []
         start_point, period = self._decompose_warmup_point()
@@ -233,6 +268,10 @@ class Base:
         print("提取的特征：" + str(self.columns_name))
 
     def _fit_init(self):
+        """
+
+        :return:
+        """
         # 开始训练模型
         self.classifier_name = "RandomForestClassifier"
         self.param_grid = {"criterion": 'gini',
@@ -247,6 +286,10 @@ class Base:
         self.classifier = RandomForestClassifier(**self.param_grid)
 
     def fit(self):
+        """
+
+        :return:
+        """
         self._fit_init()
         if self.ts_data_array is not None and self.ts_label_array is not None:
             self._get_feature()
@@ -258,11 +301,21 @@ class Base:
 
     @staticmethod
     def _get_best_f1_score(fpr, tpr, threshold):
+        """
+        获取best f1 score
+        :param fpr:
+        :param tpr:
+        :param threshold: 阈值
+        :return:
+        """
         f1s = 2 * fpr * tpr / (fpr + tpr)
         max_args = np.argmax(f1s)
         return f1s[max_args], fpr[max_args], tpr[max_args], threshold[max_args]
 
     def predict(self):
+        """
+        进行预测
+        """
         # 在训练集上看效果
         with open(self.result_dir + '/' + str(self.classifier_name) + '_train_set_performance.txt', 'a') as f:
             f.write(self.start_time)
