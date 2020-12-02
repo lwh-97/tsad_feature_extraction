@@ -13,6 +13,11 @@ import numpy as np
 
 
 def get_interval(ts_timestamp_array):
+    """
+    获取数据的间隔
+    :param ts_timestamp_array: 待检测序列时间戳
+    :return: 数据的间隔
+    """
     timestamps = np.asarray(sorted(ts_timestamp_array))
     intervals = np.diff(timestamps)
     ts_interval = int(np.median(intervals))
