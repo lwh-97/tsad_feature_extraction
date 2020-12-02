@@ -12,6 +12,11 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
 
 
 def get_feature_logs(time_series):
+    """
+    提取时间序列的对数特征
+    :param time_series:  时间序列
+    :return: 对数特征
+    """
     return np.log(time_series + 1e-2)
 
 
@@ -24,16 +29,37 @@ def get_feature_logs(time_series):
 
 
 def get_feature_SimpleES_residuals(time_series, alpha):
+    """
+    提取时间序列的简单指数平滑误差
+    :param time_series: 时间序列
+    :param alpha:
+    :return:
+    """
     predict = SimpleExpSmoothing(time_series).fit(smoothing_level=alpha)
     return time_series - predict.fittedvalues
 
 
 def get_feature_AddES_residuals(time_series, alpha, beta):
+    """
+    提取时间序列的指数平滑误差
+    :param time_series: 时间序列
+    :param alpha:
+    :param beta:
+    :return:
+    """
     predict = ExponentialSmoothing(time_series, trend='add').fit(smoothing_level=alpha, smoothing_slope=beta)
     return time_series - predict.fittedvalues
 
 
 def get_feature_Holt_residuals(time_series, alpha, beta, phi):
+    """
+    提取时间序列的霍尔特误差
+    :param time_series: 时间序列
+    :param alpha:
+    :param beta:
+    :param phi:
+    :return:
+    """
     predict = Holt(time_series).fit(smoothing_level=alpha, smoothing_slope=beta, damping_slope=phi)
     return time_series - predict.fittedvalues
 

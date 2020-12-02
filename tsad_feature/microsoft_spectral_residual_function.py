@@ -113,6 +113,9 @@ def extend_series(values, extend_num=5, look_ahead=5):
 
 
 def get_spectral_residual_time_series(ts_data):
+    """
+    :param ts_data:待检测数据
+    """
     print("extracting spectral residual feature")
     if ts_data is not list:
         try:

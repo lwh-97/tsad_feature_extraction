@@ -11,6 +11,12 @@ import pywt
 
 
 def waves(time_series, wave):
+    """
+    提取小波变换特征
+    :param time_series: 时间序列
+    :param wave:
+    :return:
+    """
     ca, cd = pywt.dwt(time_series, wave)
     rec_ts = pywt.idwt(None, cd, wave)
     return rec_ts
